@@ -27,9 +27,9 @@ class TrelloApi
 	 * @return mixed
 	 * @throws JsonException
 	 */
-	public function request(string $type, string $request, ?array $args = [])
+	public function request(string $type, string $request, ?array $args = []): mixed
 	{
-		if (false !== strpos($request, '?')) {
+		if (str_contains($request, '?')) {
 			$url = 'https://api.trello.com' . $request . '&key=' . $this->key . '&token=' . $this->token;
 		} else {
 			$url = 'https://api.trello.com' . $request . '?key=' . $this->key . '&token=' . $this->token;
@@ -59,7 +59,6 @@ class TrelloApi
 		}
 
 		$response = curl_exec($c);
-		curl_close($c);
 
 		return json_decode($response, false, 512, JSON_THROW_ON_ERROR);
 	}
